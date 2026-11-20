@@ -1,0 +1,21 @@
+# MATLAB artifacts & autosaves
+*.asv
+*.autosave
+*.m~
+*.mex*
+*.slxc
+*.slx.autosave
+slprj/
+sfprj/
+codegen/
+
+# Large regenerable binary simulation workspace (rebuilt by main_mission_analysis.m)
+results/*.mat
+
+# OS & Editor clutter
+.DS_Store
+Thumbs.db
+desktop.ini
+*.log
+*.tmp
+.vscode/

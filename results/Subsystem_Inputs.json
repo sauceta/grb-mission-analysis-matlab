@@ -1,0 +1,298 @@
+{
+  "metadata": {
+    "mission": "TUM Space Mission Design (WS 2026/27) — GRB Alert Mission",
+    "epoch_utc": "2028-06-01 00:00:00 UTC",
+    "recommended": "Compact Coded-Mask SmallSat (SRR Candidate)",
+    "verification": "6/6 PASS"
+  },
+  "architectures": {
+    "arch_1": {
+      "code": "ARCH-1",
+      "name": "Compact Coded-Mask SmallSat (SRR Candidate)",
+      "orbit": {
+        "altitude_km": 535,
+        "inclination_deg": 28.5,
+        "period_min": 95.3394133810954,
+        "raan_dot_deg_day": -6.6053918403427128
+      },
+      "power_thermal": {
+        "worst_cold_eclipse_min": 35.65,
+        "worst_hot_eclipse_min": 27.21,
+        "mean_sunlight_yr_pct": 64.22,
+        "beta_max_abs_deg": 51.84,
+        "full_sun_days_per_yr": 0
+      },
+      "propulsion": {
+        "dv_injection_ms": 15,
+        "dv_phasing_ms": 0,
+        "dv_drag_max_ms": 77.5,
+        "dv_cam_ms": 7.5,
+        "dv_disposal_ms": 71.68,
+        "dv_total_with_margin_ms": 188.84,
+        "prop_mass_per_sat_kg": 6.41,
+        "disposal_strategy": "Perigee Lowering (hp=280 km, <2 yr)",
+        "natural_life_smin_yr": 37.98
+      },
+      "comms_obdh": {
+        "vhf_orbit_cov_pct": 91.96,
+        "vhf_median_lat_s": 10.4,
+        "vhf_pct_le_30s": 92.5,
+        "iridium_pct_le_30s": 91.8,
+        "vhf_link_margin_dB": 29.78,
+        "ttc_contact_min_day": 153.2,
+        "ttc_max_gap_min": 272.3,
+        "ttc_downlink_Gb_day": 73.52
+      },
+      "science": {
+        "annual_detected_bursts": 41.8,
+        "annual_localized_10am": 41.8,
+        "r90_at_snr8_median_arcmin": 2.71,
+        "net_observing_duty_pct": 84.5,
+        "annual_exposure_sr_yr": 1.48,
+        "saa_loss_pct": 11.97,
+        "polar_loss_pct": 0,
+        "rel_proton_dose_index": 1.77
+      }
+    },
+    "arch_2": {
+      "code": "ARCH-2",
+      "name": "Agile Coded-Mask Monolith (SVOM/Swift Ref.)",
+      "orbit": {
+        "altitude_km": 600,
+        "inclination_deg": 29,
+        "period_min": 96.687196432108621,
+        "raan_dot_deg_day": -6.3620077099341943
+      },
+      "power_thermal": {
+        "worst_cold_eclipse_min": 35.49,
+        "worst_hot_eclipse_min": 25.95,
+        "mean_sunlight_yr_pct": 64.95,
+        "beta_max_abs_deg": 52.42,
+        "full_sun_days_per_yr": 0
+      },
+      "propulsion": {
+        "dv_injection_ms": 15,
+        "dv_phasing_ms": 0,
+        "dv_drag_max_ms": 14.76,
+        "dv_cam_ms": 7.5,
+        "dv_disposal_ms": 156.66,
+        "dv_total_with_margin_ms": 213.31,
+        "prop_mass_per_sat_kg": 81.62,
+        "disposal_strategy": "Controlled SPOUA Re-entry (hp=50 km)",
+        "natural_life_smin_yr": 150
+      },
+      "comms_obdh": {
+        "vhf_orbit_cov_pct": 94.6,
+        "vhf_median_lat_s": 10.4,
+        "vhf_pct_le_30s": 95,
+        "iridium_pct_le_30s": 91.9,
+        "vhf_link_margin_dB": 29.16,
+        "ttc_contact_min_day": 169.8,
+        "ttc_max_gap_min": 275.7,
+        "ttc_downlink_Gb_day": 82.05
+      },
+      "science": {
+        "annual_detected_bursts": 83.5,
+        "annual_localized_10am": 83.5,
+        "r90_at_snr8_median_arcmin": 1.96,
+        "net_observing_duty_pct": 81.1,
+        "annual_exposure_sr_yr": 1.42,
+        "saa_loss_pct": 15.54,
+        "polar_loss_pct": 0,
+        "rel_proton_dose_index": 2.63
+      }
+    },
+    "arch_3": {
+      "code": "ARCH-3",
+      "name": "Timing-Triangulation Constellation (9-Sat Walker)",
+      "orbit": {
+        "altitude_km": 535,
+        "inclination_deg": 28.5,
+        "period_min": 95.3394133810954,
+        "raan_dot_deg_day": -6.6053918403427128
+      },
+      "power_thermal": {
+        "worst_cold_eclipse_min": 35.65,
+        "worst_hot_eclipse_min": 27.24,
+        "mean_sunlight_yr_pct": 64.31,
+        "beta_max_abs_deg": 51.78,
+        "full_sun_days_per_yr": 0
+      },
+      "propulsion": {
+        "dv_injection_ms": 15,
+        "dv_phasing_ms": 12,
+        "dv_drag_max_ms": 65.04,
+        "dv_cam_ms": 7.5,
+        "dv_disposal_ms": 71.68,
+        "dv_total_with_margin_ms": 188.34,
+        "prop_mass_per_sat_kg": 5.22,
+        "disposal_strategy": "Perigee Lowering (hp=280 km, <2 yr)",
+        "natural_life_smin_yr": 43.89
+      },
+      "comms_obdh": {
+        "vhf_orbit_cov_pct": 91.73,
+        "vhf_median_lat_s": 11.4,
+        "vhf_pct_le_30s": 100,
+        "iridium_pct_le_30s": 67.1,
+        "vhf_link_margin_dB": 29.78,
+        "ttc_contact_min_day": 147.3,
+        "ttc_max_gap_min": 272.5,
+        "ttc_downlink_Gb_day": 70.7
+      },
+      "science": {
+        "annual_detected_bursts": 344.7,
+        "annual_localized_10am": 17.9,
+        "r90_at_snr8_median_arcmin": 67.62,
+        "net_observing_duty_pct": 96,
+        "annual_exposure_sr_yr": 11.83,
+        "saa_loss_pct": 12.12,
+        "polar_loss_pct": 0,
+        "rel_proton_dose_index": 1.85
+      }
+    },
+    "arch_4": {
+      "code": "ARCH-4",
+      "name": "Soft X-Ray Lobster-Eye Imager (EP-WXT Ref.)",
+      "orbit": {
+        "altitude_km": 550,
+        "inclination_deg": 29,
+        "period_min": 95.649880250246639,
+        "raan_dot_deg_day": -6.5241626113316791
+      },
+      "power_thermal": {
+        "worst_cold_eclipse_min": 35.61,
+        "worst_hot_eclipse_min": 26.68,
+        "mean_sunlight_yr_pct": 64.38,
+        "beta_max_abs_deg": 52.4,
+        "full_sun_days_per_yr": 0
+      },
+      "propulsion": {
+        "dv_injection_ms": 15,
+        "dv_phasing_ms": 0,
+        "dv_drag_max_ms": 32.68,
+        "dv_cam_ms": 7.5,
+        "dv_disposal_ms": 75.75,
+        "dv_total_with_margin_ms": 144.02,
+        "prop_mass_per_sat_kg": 31,
+        "disposal_strategy": "Perigee Lowering (hp=280 km, <2 yr)",
+        "natural_life_smin_yr": 98.82
+      },
+      "comms_obdh": {
+        "vhf_orbit_cov_pct": 92.27,
+        "vhf_median_lat_s": 11.4,
+        "vhf_pct_le_30s": 92.8,
+        "iridium_pct_le_30s": 90.2,
+        "vhf_link_margin_dB": 29.63,
+        "ttc_contact_min_day": 154.9,
+        "ttc_max_gap_min": 273.2,
+        "ttc_downlink_Gb_day": 74.34
+      },
+      "science": {
+        "annual_detected_bursts": 9.5,
+        "annual_localized_10am": 9.5,
+        "r90_at_snr8_median_arcmin": 1.31,
+        "net_observing_duty_pct": 83.8,
+        "annual_exposure_sr_yr": 0.79,
+        "saa_loss_pct": 12.61,
+        "polar_loss_pct": 0,
+        "rel_proton_dose_index": 1.93
+      }
+    },
+    "arch_5": {
+      "code": "ARCH-5",
+      "name": "All-Sky Count-Rate Monitor (GECAM/GBM Ref.)",
+      "orbit": {
+        "altitude_km": 550,
+        "inclination_deg": 29,
+        "period_min": 95.649880250246639,
+        "raan_dot_deg_day": -6.5241626113316791
+      },
+      "power_thermal": {
+        "worst_cold_eclipse_min": 35.61,
+        "worst_hot_eclipse_min": 26.68,
+        "mean_sunlight_yr_pct": 64.38,
+        "beta_max_abs_deg": 52.4,
+        "full_sun_days_per_yr": 0
+      },
+      "propulsion": {
+        "dv_injection_ms": 15,
+        "dv_phasing_ms": 12,
+        "dv_drag_max_ms": 46.73,
+        "dv_cam_ms": 7.5,
+        "dv_disposal_ms": 75.75,
+        "dv_total_with_margin_ms": 172.68,
+        "prop_mass_per_sat_kg": 34.03,
+        "disposal_strategy": "Perigee Lowering (hp=280 km, <2 yr)",
+        "natural_life_smin_yr": 69.34
+      },
+      "comms_obdh": {
+        "vhf_orbit_cov_pct": 92.29,
+        "vhf_median_lat_s": 9.4,
+        "vhf_pct_le_30s": 99.9,
+        "iridium_pct_le_30s": 93.4,
+        "vhf_link_margin_dB": 29.63,
+        "ttc_contact_min_day": 154.8,
+        "ttc_max_gap_min": 273.2,
+        "ttc_downlink_Gb_day": 74.32
+      },
+      "science": {
+        "annual_detected_bursts": 429.7,
+        "annual_localized_10am": 0,
+        "r90_at_snr8_median_arcmin": 328.73,
+        "net_observing_duty_pct": 96,
+        "annual_exposure_sr_yr": 10.85,
+        "saa_loss_pct": 12.76,
+        "polar_loss_pct": 0,
+        "rel_proton_dose_index": 1.97
+      }
+    },
+    "arch_6": {
+      "code": "ARCH-6",
+      "name": "Polar SSO Coded-Mask SmallSat (Orbit Trade Ref.)",
+      "orbit": {
+        "altitude_km": 535,
+        "inclination_deg": 97.54,
+        "period_min": 95.3394133810954,
+        "raan_dot_deg_day": 0.98626711298886283
+      },
+      "power_thermal": {
+        "worst_cold_eclipse_min": 35.65,
+        "worst_hot_eclipse_min": 35.52,
+        "mean_sunlight_yr_pct": 62.67,
+        "beta_max_abs_deg": 8.26,
+        "full_sun_days_per_yr": 0
+      },
+      "propulsion": {
+        "dv_injection_ms": 15,
+        "dv_phasing_ms": 0,
+        "dv_drag_max_ms": 74.55,
+        "dv_cam_ms": 7.5,
+        "dv_disposal_ms": 71.68,
+        "dv_total_with_margin_ms": 185.6,
+        "prop_mass_per_sat_kg": 6.31,
+        "disposal_strategy": "Perigee Lowering (hp=280 km, <2 yr)",
+        "natural_life_smin_yr": 37.98
+      },
+      "comms_obdh": {
+        "vhf_orbit_cov_pct": 39.26,
+        "vhf_median_lat_s": 300.4,
+        "vhf_pct_le_30s": 39.7,
+        "iridium_pct_le_30s": 91.8,
+        "vhf_link_margin_dB": 29.78,
+        "ttc_contact_min_day": 205.4,
+        "ttc_max_gap_min": 210.3,
+        "ttc_downlink_Gb_day": 131.94
+      },
+      "science": {
+        "annual_detected_bursts": 30.8,
+        "annual_localized_10am": 30.8,
+        "r90_at_snr8_median_arcmin": 2.85,
+        "net_observing_duty_pct": 58,
+        "annual_exposure_sr_yr": 0.99,
+        "saa_loss_pct": 6.69,
+        "polar_loss_pct": 32.94,
+        "rel_proton_dose_index": 1.29
+      }
+    }
+  }
+}

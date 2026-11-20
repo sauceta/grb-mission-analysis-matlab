@@ -1,0 +1,18 @@
+% Auto-generated Verification & Plausibility Table (Report Guide p. 5)
+\begin{table}[htbp]
+\centering\small
+\caption{Mission Analysis Software Verification and Literature Plausibility Checks.}
+\label{tab:mission_analysis_verification}
+\begin{tabular}{@{}llllc@{}}
+\toprule
+\textbf{ID} & \textbf{Verification / Plausibility Check} & \textbf{Simulation Output} & \textbf{Analytical / Literature Ref.} & \textbf{Status} \\
+\midrule
+V-01 & Two-Body Energy \& Angular Momentum Conservation (10 orbits) & dE/E=9.26e-10, dH/H=4.63e-10 & < 1.0e-8 (analytical invariant) & \textbf{PASS} \\
+V-02 & J2 Secular RAAN Precession vs Analytical (500 km SSO) & 0.9903 deg/day (err=0.47\%) & 0.9857 deg/day (SSO=0.9856) & \textbf{PASS} \\
+V-03 & Conical Max Eclipse Duration at Beta=0 (600 km) vs Hand Calc & 34.83 min (err=1.84\%) & 35.49 min (T/pi*asin(Re/a)) & \textbf{PASS} \\
+V-04 & Gauss Drag Work Decay vs Analytical Circular Rate (500 km) & 19016 m/yr (err=3.58\%) & 19721 m/yr (NRLMSISE-00 Nom) & \textbf{PASS} \\
+V-05 & Literature Benchmark: Swift LEO (600 km, 20.6 deg) & SAA=14.5\%, Occ=31.1\% & Lit: SAA ~9-15\%, Occ ~30-32\% (Gehrels 2004) & \textbf{PASS} \\
+V-06 & Literature Benchmark: SVOM VHF Network (625 km, 29.0 deg) & Cov=95.7\%, Med=9.4s, <=30s=96.2\% & Lit: Cov ~93\%, Med 8.9s, >=66\% <=30s (arXiv:2604.24263) & \textbf{PASS} \\
+\bottomrule
+\end{tabular}
+\end{table}
