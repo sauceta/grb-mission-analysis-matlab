@@ -1,0 +1,24 @@
+% Standalone preview of the trade-off section. Upload this folder (with generated/)
+% to Overleaf and compile with pdfLaTeX + BibTeX.
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=2cm]{geometry}
+\usepackage{amsmath,booktabs,tabularx,longtable}
+\usepackage[table]{xcolor}
+\usepackage[hidelinks]{hyperref}
+\definecolor{passc}{RGB}{214,239,214}
+\definecolor{failc}{RGB}{248,215,213}
+\renewcommand{\arraystretch}{1.15}
+
+\begin{document}
+\input{tradeoff_section.tex}
+
+\appendix
+\section{Trade-off Model}\label{app:tradeoff}
+The values of Tables~\ref{tab:screening}--\ref{tab:sensitivity} are computed by
+\texttt{tradeoff\_model.py} (Python~3, standard library only), which also writes every
+number to \texttt{results.csv}. Its inputs are listed in Table~\ref{tab:tradeinputs}.
+\input{generated/inputs.tex}
+
+\bibliographystyle{IEEEtran}
+\bibliography{refs_tradeoff}
+\end{document}

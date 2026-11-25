@@ -1,0 +1,335 @@
+% =============================================================================
+% System architecture trade-off: localization technique (v2, first-principles sizing)
+% Needs in the preamble: booktabs, tabularx, longtable, amsmath, xcolor[table]
+%   \definecolor{passc}{RGB}{214,239,214}  \definecolor{failc}{RGB}{248,215,213}
+% Tables in generated/ are written by tradeoff_model.py; re-run it after any
+% input or requirement change and re-upload generated/*.tex to Overleaf.
+% =============================================================================
+
+\section{Concept Exploration and System Trade-off --- \textit{[Name]}}\label{sec:tradeoff}
+
+\subsection{Trade Tree and Method}
+
+Section~1.4 keeps the localization architecture open between a compact coded-mask
+imager and a timing constellation, and names three priorities for the trade: cost per
+usefully localized burst, end-of-life detector stability and compliance with the ESA
+5-year disposal rule. Because the localization technique fixes the number of spacecraft,
+the payload mass and the alert chain, it is traded first. The trades that follow from it
+are listed in Table~\ref{tab:tradetree} and are carried out in the subsystem chapters.
+
+\begin{table}[htbp]\centering\small
+\caption{Trade tree. Each lower-level trade is opened only after the trade above it is closed.}\label{tab:tradetree}
+\begin{tabularx}{\linewidth}{@{}l X X l@{}}\toprule
+ID & Trade & Alternatives & Section \\\midrule
+T-1 & Localization architecture & coded mask; timing triangulation; count-rate ratios; lobster-eye & \ref{sec:tradeoff} \\
+T-2 & Orbit & inclination $0^\circ$--$30^\circ$ (ENV-050); altitude vs.\ 5-year lifetime (LIF-010) & Mission analysis \\
+T-3 & Alert link & ground VHF network; commercial relay constellation; own relay & Telecom., ground segment \\
+T-4 & Detector & CdTe; CdZnTe; scintillator + SiPM & Payload \\
+T-5 & Launch & rideshare; dedicated small launcher & Launch \\\bottomrule
+\end{tabularx}\end{table}
+
+The trade follows the rules of the course report guide: every criterion is derived from a
+requirement and carries a unit, every value is computed or cited, and the only qualitative
+criterion (in-orbit evidence of the localization technique) is identified as such. Each
+alternative is sized from physical relations against the SRR thresholds instead of being
+scaled from an existing instrument, so that the result follows from the requirements and
+not from the design choices of another mission.
+
+\textbf{Stage 1 (screening)} rejects techniques that cannot meet a threshold requirement on
+physical grounds. \textbf{Stage 2} sizes each remaining technique and evaluates it. The
+decision rule is: (i) reject any alternative that misses a threshold of MIS-020, MIS-030,
+MIS-040, PER-065 or the nominal figure of merit $N_u\ge30\,\mathrm{yr^{-1}}$ of
+Section~2.3; (ii) among the rest, select the lowest cost per usefully localized burst.
+
+No weighted scoring table is used. The report guide accepts weights only when they are
+taken from the literature or from expert input, and no published weighting exists for GRB
+localization architectures. The figure of merit of Section~2.3 combines the three
+priorities of Section~1.4 in one number traceable to SN-001 and SN-009.
+
+\subsection{Stage 1: Screening}
+
+Table~\ref{tab:screening} shows the four techniques that have been flown or designed for
+GRB localization. Count-rate ratios are rejected because the systematic error of
+Fermi/GBM, the best-calibrated instrument of this type, is $3.71^\circ$
+\cite{Connaughton2015}, more than twenty times the 10\,arcmin of MIS-030. Lobster-eye
+optics are rejected because they work in the 0.5--4\,keV band \cite{Yuan2022} and do not
+cover the 5--50\,keV band of PER-040.
+
+\input{generated/screening.tex}
+
+\subsection{Stage 2: Alternatives}
+
+\begin{itemize}
+\item \textbf{A1, coded-mask imager sized to the PER-040 threshold.} One spacecraft; the
+smallest camera that meets PER-040, PER-010/020 and PER-065.
+\item \textbf{A2, coded-mask imager sized to the PER-040 goal}
+($1\times10^{-8}$\,erg\,cm$^{-2}$\,s$^{-1}$). Shows whether a larger camera lowers the cost
+per burst.
+\item \textbf{A0, coded-mask imager limited to PHY-010.} The largest camera with a 10\,kg
+payload.
+\item \textbf{B1, timing-triangulation constellation.} HERMES-type 3U CubeSats
+\cite{Ghirlanda2024,Fiore2020} in two orbital planes (ARC-070), with as many spacecraft as
+needed for $r_{90}=10'$ at the most favourable published timing accuracy
+\cite{Werner2018}.
+\item \textbf{B0, HERMES Pathfinder as designed}, six units \cite{Ghirlanda2024}.
+\end{itemize}
+
+\subsection{Coded-Mask Sizing Model}
+
+A coded-mask camera consists of a position-sensitive detector of side $D$ and area $A=D^2$,
+a mask of the same size at a distance $f$ above it, and a passive shield closing the space
+between them \cite{Braga2019}. The camera is sized in four steps, each tied to an SRR
+threshold.
+
+\paragraph{Flux requirement.} PER-040 gives the 1-s peak energy flux $F$ in the band
+$E_1$--$E_2=5$--50\,keV. For the photon spectrum $N(E)\propto E^{-1}$, which corresponds to
+the typical low-energy index of GRB spectra \cite{Band1993}, the photon flux is
+\begin{equation}\label{eq:pflux}
+P = \frac{F}{E_2-E_1}\,\ln\frac{E_2}{E_1},
+\end{equation}
+so the PER-040 threshold $F=2.5\times10^{-8}$\,erg\,cm$^{-2}$\,s$^{-1}$ corresponds to
+$P_{\rm req}=0.80$\,ph\,cm$^{-2}$\,s$^{-1}$.
+
+\paragraph{Detector area.} For a mask with open fraction $\rho$ decoded by balanced
+correlation, the imaging signal-to-noise ratio of a source of photon flux $P$ is
+\begin{equation}\label{eq:snr}
+\mathrm{SNR} = \frac{\sqrt{\rho(1-\rho)}\;\varepsilon P\sqrt{A\,t}}{\sqrt{b+(1-\rho)\,\varepsilon P}},
+\end{equation}
+where $\varepsilon$ is the detector efficiency, $t$ the integration time and $b$ the
+background count rate per unit detector area. Eq.~\eqref{eq:snr} follows from propagating
+Poisson noise through the correlation decoding; $\rho=0.5$ maximizes it in the
+background-dominated case \cite{Braga2019}. With $t=1$\,s (PER-040), $\mathrm{SNR}=6.5$
+(PER-100), $b=3.0$\,counts\,cm$^{-2}$\,s$^{-1}$ (ENV-010) and $\varepsilon=0.8$, solving
+Eq.~\eqref{eq:snr} for $A$ gives the detector area.
+
+\paragraph{Field of view and resolution.} PER-065 requires
+$\Omega\,\eta_{\rm eff}\ge0.75$\,sr. With $\eta_{\rm eff}=0.74$ from the team's orbit
+simulation of a 535\,km, $28.5^\circ$ orbit (mission-analysis chapter), the half-coded field
+of view must be $\Omega\ge1.01$\,sr. For a square field with half-angle $\alpha$ per axis,
+\begin{equation}\label{eq:fov}
+\Omega = 4\arcsin\!\left(\sin^2\alpha\right),\qquad f=\frac{D}{2\tan\alpha},
+\end{equation}
+Eq.~\eqref{eq:fov} gives $\alpha=30.0^\circ$ and fixes $f$ for a given $D$. The angular resolution
+(FWHM) of the camera and the 90\,\% error radius are \cite{Braga2019}
+\begin{equation}\label{eq:res}
+\theta_{\rm res}=\frac{\sqrt{m^2+d^2}}{f},\qquad
+r_{90}=\sqrt{\left(\frac{k_{\rm loc}\,\theta_{\rm res}}{\mathrm{SNR}}\right)^2+\sigma_{\rm sys}^2},
+\end{equation}
+where $m$ is the mask element size, $d$ the detector pixel pitch, $k_{\rm loc}=1.5$ the
+ratio between the 90\,\% error radius and $\theta_{\rm res}/\mathrm{SNR}$, and
+$\sigma_{\rm sys}=2.5'$ the systematic allocation of PER-020. Requiring $r_{90}=10'$ at
+SNR~8 (PER-010) gives $\theta_{\rm res}\le51.6'$. With $m=1.25\,d$, the ratio used on
+Swift/BAT \cite{Barthelmy2005}, Eq.~\eqref{eq:res} gives the pixel pitch $d$.
+
+\paragraph{Mass and power.} With material densities and thicknesses from
+Table~\ref{tab:tradeinputs}, the payload mass is
+\begin{equation}\label{eq:mass}
+m_{\rm pl} = (1+\mu)\Big[k_{\rm fee}\,\varrho_{\rm CdTe}\,t_{\rm det}A
+ + k_{\rm supp}(1-\rho)\,\varrho_{\rm W}\,t_{\rm mask}A
+ + \sigma_{\rm sh}\left(4Df+D^2\right) + m_{\rm DPU}\Big],
+\end{equation}
+where the four terms are the detector modules (crystal mass times the factor $k_{\rm fee}$
+for front-end electronics and mechanics), the tungsten mask with its support frame, the
+graded side and rear shield of areal density $\sigma_{\rm sh}$, and the data processing
+unit. $\mu=0.2$ is the margin for a new development \cite{ESAmargin}. The payload power is
+$N_{\rm pix}\,p_{\rm ch}+p_{\rm DPU}$ with $N_{\rm pix}=(D/d)^2$.
+
+\paragraph{Plausibility of the background.} ENV-010 limits the background to
+3.0\,counts\,cm$^{-2}$\,s$^{-1}$. The cosmic X-ray background alone, integrated over
+5--50\,keV with the fit of \cite{Gruber1999} and seen through the open half of the mask
+over $\Omega$, gives 2.3\,counts\,cm$^{-2}$\,s$^{-1}$. ENV-010 therefore leaves only
+0.7\,counts\,cm$^{-2}$\,s$^{-1}$ for albedo, shield leakage and activation, and the case of
+twice the ENV-010 background is included in the sensitivity analysis.
+
+\paragraph{Detection and usefully localized bursts.} The SRR derives MIS-020 from PER-040 and
+PER-065: a camera exactly at both thresholds detects $N_{\rm req}=40\,\mathrm{yr^{-1}}$.
+A camera with flux limit $P_{\rm lim}$ and exposure $\Omega\,\eta_{\rm eff}$ detects
+\begin{equation}\label{eq:ndet}
+N_{\rm det}=N_{\rm req}\left(\frac{P_{\rm lim}}{P_{\rm req}}\right)^{-\beta}
+\frac{\Omega\,\eta_{\rm eff}}{0.75\,\mathrm{sr}},
+\end{equation}
+where $\beta$ is the slope of the integral burst distribution $N(>P)\propto P^{-\beta}$;
+$\beta=1$ is assumed and varied between 0.8 and the Euclidean limit 1.5. The flow-down in
+Eq.~\eqref{eq:ndet} is
+taken from the SRR and must be verified with the burst-population Monte Carlo of the
+mission-analysis chapter. Of the triggers above $\mathrm{SNR}_{\rm a}=6.5$, those above
+$\mathrm{SNR}_{10}=8$ reach $r_{90}\le10'$, so the usefully localized rate is
+\begin{equation}\label{eq:nu}
+N_u = N_{\rm det}\left(\frac{\mathrm{SNR}_{10}}{\mathrm{SNR}_{\rm a}}\right)^{-\beta} f_{\rm lat},
+\end{equation}
+with $f_{\rm lat}=1$ if the alert reaches GCN within 20\,min; Eq.~\eqref{eq:nu} is the figure
+of merit of Section~2.3 for a coded mask. The team's simulation of a
+VHF alert network gives 92.5\,\% of alerts within 30\,s for the 535\,km orbit.
+
+\subsection{Triangulation Model}
+
+For timing triangulation the error per coordinate is \cite{Fiore2020}
+\begin{equation}\label{eq:tri}
+\sigma_\theta \approx 2.4^\circ\,\frac{\sigma_t}{\sqrt{N_{\rm vis}-3}},
+\end{equation}
+with $\sigma_t$ the combined delay and clock error in ms, $N_{\rm vis}$ the number of
+spacecraft that see the burst and an average baseline of 7000\,km;
+$r_{90}=\sqrt{2\ln10}\,\sigma_\theta=2.146\,\sigma_\theta$. $\sigma_t=0.34$\,ms is derived
+from CAMELOT, about $20'$ with nine CubeSats \cite{Werner2018}, and $\sigma_t=1.8$\,ms from
+HERMES Pathfinder, about $2.5^\circ$ with six units \cite{Fiore2020}. A spacecraft sees a
+given burst with probability $f_{\rm see}=0.70\,\Omega_{\rm unit}/4\pi=0.29$, where 0.70 is
+the sky fraction not blocked by the Earth at 550\,km and $\Omega_{\rm unit}=5.2$\,sr
+\cite{Ghirlanda2024}. The fleet size follows from Eq.~\eqref{eq:tri} as
+$N=N_{\rm vis}/f_{\rm see}$. The detection rate is that of HERMES Pathfinder,
+$214\,\mathrm{yr^{-1}}$ \cite{Ghirlanda2024}, and half of the detected bursts are assumed
+to reach $r_{90}\le10'$ because the fleet is sized for the median burst.
+
+\subsection{Cost Model}
+
+The single-spacecraft dry mass is $3.3\,m_{\rm pl}$, the average of
+\cite[Table~10-6, p.~312]{Wertz1999}, plus the 20\,\% system margin of DES-010. Its cost
+follows Eq.~\eqref{eq:sscm}, the Small Satellite Cost Model \cite[Table~20-6, p.~797]{Wertz1999}:
+\begin{equation}\label{eq:sscm}
+C_{\rm bus} = 781 + 26.1\,m_{\rm bus}^{1.261}\ \ [\mathrm{FY00\,k\$}],\qquad
+C_{\rm tot} = 1.495\,(1+0.4)\,C_{\rm bus},
+\end{equation}
+where $m_{\rm bus}$ is the bus dry mass in kg (model range 20--400\,kg), 0.4 is the SSCM
+payload-to-bus cost ratio and 1.495 adds integration and test, program level, ground support
+equipment and launch and orbit operations support \cite[p.~797]{Wertz1999}. Costs are
+escalated to 2024 dollars with the consumer price index \cite{BLSCPI}. The SSCM is not valid
+for CubeSats, so the constellation is costed by analogy: the HERMES-SP project cost of
+3.43\,MEUR for development and three flight units \cite{CORDIS821896} sets the first-unit
+cost, and the learning curve of Eq.~\eqref{eq:learning}
+\begin{equation}\label{eq:learning}
+C_N = C_{\rm TFU}\,N^{B},\qquad B = 1-\frac{\ln(1/S)}{\ln 2},
+\end{equation}
+with $S=85\,\%$ for more than 50 units \cite[Eq.~20-5, p.~809]{Wertz1999} gives the
+production cost, and 5\,M\$ is added for constellation development \cite{Garcia2021}.
+Launch is priced at 350\,k\$ for the first 50\,kg and 7\,k\$/kg above
+\cite{SpaceXRideshare}, one launch per orbital plane. Operations are excluded for both
+architectures and are estimated in the cost chapter.
+
+\subsection{Results}
+
+Table~\ref{tab:maskdesign} gives the three coded-mask designs and
+Table~\ref{tab:tradematrix} the trade-off matrix.
+
+\input{generated/mask_design.tex}
+\input{generated/trade_matrix.tex}
+
+\textbf{A1} meets every threshold under the SRR flow-down of Eq.~\eqref{eq:ndet} (but see
+Section~\ref{sec:flowdown}) with a 37\,cm square CdTe detector (1375\,cm$^2$,
+550\,cm$^2$ effective area), a mask 32\,cm above it, 3.0\,mm pixels and 15\,200 channels.
+The payload has a mass of 21.8\,kg including margin and draws 12.6\,W; the shield accounts
+for more than half of the mass. The 87\,kg spacecraft costs about 23\,M\$, or 0.35\,M\$ per
+usefully localized burst over two years. A1 is sized exactly at PER-040 and therefore
+detects exactly 40 bursts per year: it carries no performance margin.
+
+\textbf{A2} detects 100 bursts per year, but its 90\,cm detector and 111\,kg payload make the
+spacecraft 440\,kg and 155\,M\$, and the cost per burst rises to 0.95\,M\$. Mass grows
+faster than yield because the shield scales with $D\,f\propto A$ while the yield scales with
+$A^{\beta/2}$.
+
+\textbf{A0} shows that PHY-010 and MIS-020 are incompatible for a coded mask: a 10\,kg
+payload allows 482\,cm$^2$ and 23 detected bursts per year. The 10\,kg value of PHY-010 was
+derived from the mass per area of a non-imaging HERMES detector (Appendix~B), which a mask
+and shield cannot reach.
+
+\textbf{B1} reaches $r_{90}=10'$ only with 394 CubeSats (2364\,kg, 185\,M\$), even with the
+most favourable published timing accuracy. Its decisive weakness is latency: triangulation
+needs the photon arrival times of at least four spacecraft, and HERMES plans to deliver
+trigger messages within 30\,min and photon data within 24\,h \cite{Fiore2024}. This fails
+MIS-040 and the 20\,min usefulness limit, so $N_u=0$. \textbf{B0} gives
+$r_{90}\approx9^\circ$ and fails MIS-030 by a factor of more than 50.
+
+\subsection{Sensitivity Analysis}
+
+\input{generated/sensitivity.tex}
+
+Table~\ref{tab:sensitivity} varies every assumption one at a time. The coded mask remains the
+selected architecture in every case; the payload mass of A1 ranges from 19.8 to 38.3\,kg, the
+largest increases coming from a doubled background (38.3\,kg) and a lower detector efficiency
+(35.3\,kg). The localization constant $k_{\rm loc}$ does not change the mass, because the
+field of view fixes $f/D$, but it sets the pixel count: $k_{\rm loc}=2$ requires 2.3\,mm
+pixels, 27\,000 channels and 18.5\,W, which exceeds PHY-020.
+
+Two results matter for the baseline. First, for the Euclidean slope $\beta=1.5$, A1 falls to
+$N_u=29.3\,\mathrm{yr^{-1}}$ and misses the figure of merit, and the larger A2 is selected:
+a camera sized exactly at PER-040 has no margin. Second, the constellation would be preferred
+only if on-board inter-satellite triangulation within 30\,s were possible (B1$^*$) and the
+spacecraft dry mass were at the top of the SMAD range (seven times the payload mass). No
+mission has demonstrated inter-satellite triangulation, so this is the condition under which
+the trade should be reopened.
+
+\subsection{Verification of the Detection-Rate Flow-down}\label{sec:flowdown}
+
+Equation~\eqref{eq:ndet} assumes, as the SRR does, that a camera exactly at PER-040 and
+PER-065 detects the 40 bursts per year of MIS-020. This assumption was checked with a
+Monte Carlo simulation.
+
+\begin{itemize}
+\item \textbf{Purpose and requirement verified:} MIS-020, through the flow-down
+PER-040\,+\,PER-065\,$\rightarrow$\,MIS-020.
+\item \textbf{Tool:} MATLAB R2025b, \texttt{Trade-off/verification/check\_detection\_rate.m}.
+\item \textbf{Model:} the burst population of the team's mission-analysis suite, used
+unchanged: 900 bursts per year over the whole sky above a 1-s peak flux of
+0.25\,ph\,cm$^{-2}$\,s$^{-1}$ (15--150\,keV), a broken power-law flux distribution and Band
+spectra. $4\times10^5$ bursts are drawn inside the field of view of each camera and detected
+with Eq.~\eqref{eq:snr} in the 5--50\,keV band, including the off-axis cosine.
+\item \textbf{Main simplification:} partial coding inside the field of view is ignored, which
+makes the detection rates optimistic.
+\item \textbf{Plausibility check:} the same population, seen by a 1.4\,sr camera with a
+threshold of 0.4\,ph\,cm$^{-2}$\,s$^{-1}$, gives 67 bursts per year before duty-cycle losses,
+consistent with the Swift/BAT on-board rate of 63 per year quoted in Section~2.3.
+\end{itemize}
+
+\begin{table}[htbp]\centering\small
+\caption{Detection rates of the three coded-mask designs in the burst-population Monte Carlo,
+compared with the SRR flow-down of Eq.~\eqref{eq:ndet}.}\label{tab:flowdown}
+\begin{tabular}{@{}l r r r r r@{}}\toprule
+Design & $A$ [cm$^2$] & $N_{\rm det}$, Eq.~\eqref{eq:ndet} [yr$^{-1}$] & $N_{\rm det}$, MC [yr$^{-1}$] & $N_u$, MC [yr$^{-1}$] & $\beta_{\rm eff}$ \\\midrule
+A1 & 1375 & 40.0  & \cellcolor{failc}23.5 & \cellcolor{failc}18.7 & 1.06 \\
+A2 & 8098 & 100.0 & \cellcolor{passc}48.6$^\dagger$ & \cellcolor{passc}44.2$^\dagger$ & 0.27 \\
+A0 & 482  & 22.9  & \cellcolor{failc}13.0 & \cellcolor{failc}10.0 & 1.22 \\\bottomrule
+\multicolumn{6}{@{}l}{\footnotesize $^\dagger$ Lower bound: A2 still detects a burst at the population floor (SNR 7.9).}
+\end{tabular}\end{table}
+
+Table~\ref{tab:flowdown} shows that the flow-down does not hold in the team's population. A1
+detects 23.5 bursts per year, not 40. The fraction of usefully localized triggers (0.80) and
+the local slope of the distribution ($\beta_{\rm eff}=1.06$) agree with the values assumed in
+Eqs.~\eqref{eq:ndet}--\eqref{eq:nu}. The difference therefore comes from the normalization of
+the flow-down itself. With $\Omega\,\eta_{\rm eff}=0.75$\,sr, only 53.7 bursts per year above
+the population floor fall in the field of view at all, so MIS-020 requires detecting three
+quarters of them. Meeting MIS-020 needs either a larger field of view than PER-065 asks for or a
+camera close to A2. PER-040 and PER-065 are consequently not sufficient for MIS-020 and must be
+revised together with the camera sizing in the payload chapter. The architecture decision is
+unaffected: the constellation fails MIS-040 independently of the detection rate.
+
+\subsection{Selection and Consequences for the Baseline}
+
+\textbf{A single spacecraft carrying a coded-mask imager is selected.} It is the only
+architecture that meets all threshold requirements with a localization technique already
+flown, and it has the lowest cost per usefully localized burst. The constellation is rejected
+because it fails MIS-040 with any demonstrated alert chain and needs 394 spacecraft to meet
+MIS-030.
+
+The camera size is not yet fixed. Under the SRR flow-down, A1 is the cheapest compliant design;
+the burst-population check of Section~\ref{sec:flowdown} shows that A1 detects only 23.5
+bursts per year, so the payload chapter must size the area and the field of view together
+against MIS-020 with the population model. The selection changes the requirement baseline as
+follows:
+\begin{itemize}
+\item \textbf{PHY-010} (payload mass, [TBC]) is raised from 10\,kg: A1 alone needs 21.8\,kg
+including margin, and the final value follows from the camera sizing.
+\item \textbf{PER-040 and PER-065} are revised together, since meeting both thresholds does not
+give the 40 bursts per year of MIS-020.
+\item \textbf{ENV-010} (background) is confirmed by a background model in the payload chapter,
+since the cosmic X-ray background alone uses 76\,\% of it.
+\item \textbf{PER-010} is rewritten without the instrument-specific error law: ``$r_{90}\le10'$
+for bursts with SNR\,$\ge$\,8''.
+\item \textbf{Table~C}: ARC-050 to ARC-070 (constellation) are deleted.
+\item The 87\,kg spacecraft sets the launch-mass class for T-5, and the $i\le30^\circ$ orbit
+of ENV-050 must be checked against the inclinations rideshare services offer (T-2, T-5).
+\end{itemize}
+
+\paragraph{Limitations.} The mass model resolves only the main payload elements and relies on
+assumed overhead factors, which the sensitivity analysis brackets. The detection rate relies on
+the SRR flow-down from PER-040 to MIS-020 and on an assumed burst-distribution slope. The SSCM
+dates from 1999 and its bus-cost relation has a standard error of 3.7\,M\$ (FY00)
+\cite[p.~797]{Wertz1999}. Operations costs are excluded, and $\sigma_t$ for triangulation is
+derived from predicted, not measured, performance.

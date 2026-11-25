@@ -1,0 +1,67 @@
+name,kind,n_sc,area,a_eff,F_lim,m_pl,p_pl,m_launch,fov_eta,r90,n_det,lat_pct,n_u,cost,cpb,model_ok,evidence
+A1,"Coded-mask imager, 1 spacecraft",1,1374.9809679479365,549.9923871791747,2.5e-08,21.847598698714613,12.598288357559777,86.51649084690986,0.75,10.0,40.0,92.5,32.5,22.68982069616183,0.3490741645563359,True,"Technique flown (Swift/BAT, INTEGRAL)"
+A2,"Coded-mask imager, 1 spacecraft",1,8097.535649987614,3239.014259995046,9.999999999999999e-09,111.06372817802095,12.598288357559781,439.81236358496295,0.75,10.0,100.0,92.5,81.25,154.53263110432292,0.9509700375650642,True,"Technique flown (Swift/BAT, INTEGRAL)"
+A0,"Coded-mask imager, 1 spacecraft",1,482.24855994266636,192.89942397706656,4.370680694384522e-08,10.0,12.598288357559777,39.6,0.75,10.0,22.879731326170916,92.5,18.589781702513868,10.45949079416079,0.28132365838234585,True,"Technique flown (Swift/BAT, INTEGRAL)"
+B1,"Timing triangulation, 394 CubeSats",394,nan,nan,nan,1.55,nan,2364.0,nan,9.97247053783232,214.0,0.0,0.0,185.43302871895173,inf,analogy (SSCM not valid below 20 kg bus),Not demonstrated in orbit
+B0,"Timing triangulation, 6 CubeSats",6,nan,nan,nan,1.55,nan,36.0,nan,556.2343940141989,214.0,0.0,0.0,12.357306616870506,inf,analogy (SSCM not valid below 20 kg bus),Not demonstrated in orbit
+
+input,value,unit,source
+F_req,2.5e-08,erg/cm2/s,"PER-040 threshold: 1-s peak flux, 5-50 keV"
+F_goal,1e-08,erg/cm2/s,PER-040 goal
+E1,5.0,keV,"PER-040 band, lower edge"
+E2,50.0,keV,"PER-040 band, upper edge"
+t_int,1.0,s,PER-040: 1-s peak flux
+snr_trig,6.5,-,PER-100: alert threshold
+snr_loc,8.0,-,PER-010: reference SNR
+req_r90,10.0,arcmin,MIS-030 / PER-010
+sys_loc,2.5,arcmin,PER-020: systematic allocation
+b_bkg,3.0,cts/cm2/s,ENV-010: design background count rate
+req_fovEta,0.75,sr,PER-065
+m_pl_max,10.0,kg,"PHY-010 threshold (SRR, TBC)"
+p_pl_max,15.0,W,"PHY-020 threshold (SRR, TBC)"
+req_Ndet,40.0,GRB/yr,MIS-020
+req_lat_pct,66.0,%,MIS-040: >= 66% of alerts within 30 s
+req_Nu,30.0,GRB/yr,FoM nominal tier (SRR 2.3)
+years,2.0,yr,MIS-010
+gamma_ph,1.0,-,Band1993: low-energy photon index alpha ~ -1 (spectrum N(E) ~ E^-1)
+rho,0.5,-,Braga2019: open fraction 0.5 maximizes SNR for background-dominated masks
+eps,0.8,-,ASSUMPTION: CdTe 2 mm full-energy efficiency over 5-50 keV
+k_loc,1.5,-,ASSUMPTION [CHECK Skinner2008/Braga2019]: r90 = k_loc x theta_res / SNR
+r_md,1.25,-,Barthelmy2005: BAT mask element / pixel = 5 mm / 4 mm
+eta_eff,0.74,-,"Team orbit simulation (MATLAB_Mission_Analysis v2.0, ARCH-1, 535 km/28.5 deg)"
+rho_cdte,5.85,g/cm3,NIST: CdTe density
+t_det,0.2,cm,ASSUMPTION: 2 mm CdTe (absorbs > 90% up to 50 keV)
+k_fee,2.5,-,"ASSUMPTION: detector module mass = 2.5 x crystal mass (ASICs, boards, cold plate)"
+rho_w,19.3,g/cm3,NIST: tungsten density
+t_mask,0.1,cm,ASSUMPTION: 1 mm W mask (opaque over 5-50 keV)
+k_supp,1.5,-,ASSUMPTION: mask support frame = 50% of mask mass
+sig_shield,1.5,g/cm2,ASSUMPTION: graded Pb/Sn/Cu side and rear shield areal density
+m_dpu,3.0,kg,ASSUMPTION: data processing unit for on-board imaging and trigger
+p_ch,0.0005,W,ASSUMPTION: front-end power per pixel channel
+p_dpu,5.0,W,ASSUMPTION: data processing unit power
+mar_pl,0.2,-,ESA margin philosophy [SRR 46]: 20% for new developments
+mar_sys,0.2,-,DES-010: 20% system-level mass margin
+dry_per_pl,3.3,-,SMAD Table 10-6 p.312: dry mass = 3.3 x payload (range 2-7)
+beta,1.0,-,ASSUMPTION: integral logN-logS slope near threshold (0.8-1.5; 1.5 = Euclidean)
+lat_pct_A,92.5,%,"Team orbit simulation (MATLAB v2.0, ARCH-1): VHF alerts within 30 s"
+tri_k,2.4,deg/ms,"Fiore2020 [SRR 16]: sigma = 2.4 deg x sigma_t(ms)/sqrt(N-3), baseline 7000 km"
+sig_t_opt,0.34,ms,DERIVED from CAMELOT ~20 arcmin with 9 CubeSats (Werner2018 [SRR 22])
+sig_t_pes,1.8,ms,DERIVED from HERMES Pathfinder ~2.5 deg with 6 units (Fiore2020 [SRR 16])
+fov_unit,5.2,sr,Ghirlanda2024 Table 1: HERMES S-mode FoV per unit
+earth_vis,0.7,-,DERIVED: Earth blocks 3.83 sr (30%) of the sky at 550 km
+m_unit,6.0,kg,Ghirlanda2024 Sec.2: HERMES 3U unit mass
+m_pl_unit,1.55,kg,Fiore2024 (arXiv:2409.00989): HERMES-TP payload mass
+N_det_B,214.0,GRB/yr,Ghirlanda2024 Table 2: HERMES Pathfinder 195 long + 19 short
+f_loc_B,0.5,-,ASSUMPTION: fleet sized for the median burst -> half reach r90 <= 10'
+lat_pct_B,0.0,%,Fiore2024 (arXiv:2409.00989): trigger messages within 30 min -> none within 30 s
+planes_B,2,-,ARC-070 threshold: >= 2 orbital planes
+cpi_2000,172.2,-,BLS CPI-U annual average 2000
+cpi_2018,251.1,-,BLS CPI-U annual average 2018
+cpi_2024,313.7,-,BLS CPI-U annual average 2024
+eur_usd_18,1.181,$/EUR,ECB 2018 average reference rate
+hermes_sp,3.434,MEUR2018,"CORDIS 821896: HERMES-SP total, dev + 3 flight units, no launch/ops"
+nre_B,5.0,M$2024,"ASSUMPTION: constellation-level NRE, NASA Astrophysics CubeSat line <$5M (Garcia2021)"
+ls_B,0.85,-,SMAD Sec.20.4.4 p.809: learning slope 85% for >50 units
+pl_cost_f,0.4,-,SMAD Table 20-6 p.797 (SSCM): payload = 0.4 x bus cost
+launch_base,0.35,M$,SpaceX rideshare 2026 list price: $350k up to 50 kg
+launch_kg,7000.0,$/kg,"SpaceX rideshare 2026 list price: $7,000/kg above 50 kg"
